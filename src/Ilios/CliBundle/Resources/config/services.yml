@@ -1,0 +1,87 @@
+services:
+    ilioscli.command.invalidate_user_tokens:
+        class: Ilios\CliBundle\Command\InvalidateUserTokenCommand
+        arguments: ["@ilioscore.user.manager", "@ilioscore.authentication.manager"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.create_user_token:
+        class: Ilios\CliBundle\Command\CreateUserTokenCommand
+        arguments: ["@ilioscore.user.manager", "@ilios_authentication.jwt.manager"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.sync_user:
+        class: Ilios\CliBundle\Command\SyncUserCommand
+        arguments: ["@ilioscore.user.manager", "@ilioscore.authentication.manager", "@ilioscore.directory"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.find_directory_user:
+        class: Ilios\CliBundle\Command\FindUserCommand
+        arguments: ["@ilioscore.directory"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.add_directory_user:
+        class: Ilios\CliBundle\Command\AddDirectoryUserCommand
+        arguments: ["@ilioscore.user.manager", "@ilioscore.authentication.manager", "@ilioscore.school.manager", "@ilioscore.directory"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.sync_former_students:
+        class: Ilios\CliBundle\Command\SyncFormerStudentsCommand
+        arguments: ["@ilioscore.user.manager", "@ilioscore.userrole.manager", "@ilioscore.directory"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.add_new_students_to_school:
+        class: Ilios\CliBundle\Command\AddNewStudentsToSchoolCommand
+        arguments: ["@ilioscore.user.manager", "@ilioscore.school.manager", "@ilioscore.authentication.manager", "@ilioscore.userrole.manager", "@ilioscore.directory"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.sync_all_users:
+        class: Ilios\CliBundle\Command\SyncAllUsersCommand
+        arguments: ["@ilioscore.user.manager", "@ilioscore.authentication.manager", "@ilioscore.pendinguserupdate.manager", "@ilioscore.directory", "@doctrine.orm.entity_manager"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.migrate_learningmaterials:
+        class: Ilios\CliBundle\Command\MigrateIlios2LearningMaterialsCommand
+        arguments: ["@filesystem", "@ilioscore.filesystem", "@ilioscore.learningmaterial.manager"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.send_teaching_reminders:
+        class: Ilios\CliBundle\Command\SendTeachingRemindersCommand
+        arguments: ["@ilioscore.offering.manager", "@templating", "@mailer", "%ilios_core.timezone%"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.send_change_alerts:
+        class: Ilios\CliBundle\Command\SendChangeAlertsCommand
+        arguments: ["@ilioscore.alert.manager", "@ilioscore.auditlog.manager", "@ilioscore.offering.manager", "@templating", "@mailer", "%ilios_core.timezone%"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.cleanup_strings:
+        class: Ilios\CliBundle\Command\CleanupStringsCommand
+        arguments: ["@exercise_html_purifier.default", "@doctrine.orm.entity_manager", "@ilioscore.objective.manager", "@ilioscore.learningmaterial.manager", "@ilioscore.courselearningmaterial.manager", "@ilioscore.sessionlearningmaterial.manager", "@ilioscore.sessiondescription.manager"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.validate_learning_material_paths:
+        class: Ilios\CliBundle\Command\ValidateLearningMaterialPathsCommand
+        arguments: ["@ilioscore.filesystem", "@ilioscore.learningmaterial.manager"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.add_user:
+        class: Ilios\CliBundle\Command\AddUserCommand
+        arguments: ["@ilioscore.user.manager", "@ilioscore.authentication.manager", "@ilioscore.school.manager", "@security.password_encoder"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.update_frontend:
+        class: Ilios\CliBundle\Command\UpdateFrontendCommand
+        arguments: ["@iliosweb.jsonindex", '@ilioscore.symfonyfilesystem', %kernel.cache_dir%, %ilios_web.frontend_release_version%, %ilios_web.keep_frontend_updated%]
+        tags:
+            -  { name: console.command }
+            -  { name: kernel.cache_warmer }
+    ilioscli.command.rollover_course:
+        class: Ilios\CliBundle\Command\RolloverCourseCommand
+        arguments: ["@ilioscore.courserollover"]
+        tags:
+            -  { name: console.command }
+    ilioscli.command.install_first_uer:
+        class: Ilios\CliBundle\Command\InstallFirstUserCommand
+        arguments: ["@ilioscore.user.manager", "@ilioscore.school.manager", "@ilioscore.userrole.manager", "@ilioscore.authentication.manager", "@security.password_encoder"]
+        tags:
+            -  { name: console.command }

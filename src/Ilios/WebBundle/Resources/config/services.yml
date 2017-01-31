@@ -1,0 +1,4 @@
+services:
+    iliosweb.jsonindex:
+        class: Ilios\WebBundle\Service\WebIndexFromJson
+        arguments:    ['@templating']

@@ -11,10 +11,12 @@ node 'ilios.dev' {
         ensure => directory,
         owner => $user,
         group => $group,
-        mode => 0777
+        mode => '0777'
     } ->
 
-    #@TODO: make sure in ant build file, and run command instead
-    class { ['profile::git', 'profile::better-bash', 'profile::ilios', 'profile::build::legacy', 'profile::phpmyadmin']: }
+    class { ['profile::ilios', 'profile::build::symfony', 'profile::shibbolethsp']: }
 
+    Php::Extension <| |>
+    # Configure extensions
+    -> Php::Config <| |>
 }

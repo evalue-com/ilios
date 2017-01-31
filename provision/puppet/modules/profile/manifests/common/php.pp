@@ -18,17 +18,9 @@ class profile::common::php (
         'php::extension::gd',
         'php::extension::imagick',
         'php::extension::mcrypt',
-        'php::extension::xdebug',
         'php::extension::ldap',
         'php::composer'
     ]
-
-    file { $logs:
-        ensure => directory,
-        owner => $user,
-        group => $group,
-        mode => 0777
-    } ->
 
     class { $apis: }
     class { $extensions: }
@@ -51,9 +43,27 @@ class profile::common::php (
         provider => 'apt'
     }
 
+    php::extension { 'php5-xsl':
+        ensure => installed,
+        package => 'php5-xsl',
+        provider => 'apt'
+    }
+
+    php::extension { 'php5-xdebug':
+        ensure => installed,
+        package => 'php5-xdebug',
+        provider => 'apt'
+    }
+
+    php::extension { 'php-apc':
+        ensure => installed,
+        package => 'php-apc',
+        provider => 'apt'
+    }
+
     php::apache::config { 'memory_limit':
         setting => 'memory_limit',
-        value => '768M',
+        value => '1024M',
         file => '/etc/php5/apache2/php.ini'
     }
 
@@ -89,7 +99,7 @@ class profile::common::php (
 
     php::config { 'cli_memory_limit':
         setting => 'memory_limit',
-        value => '768M',
+        value => '2048M',
         file => '/etc/php5/cli/php.ini'
     }
 
@@ -102,6 +112,12 @@ class profile::common::php (
     php::config { "apache_error_log":
         setting => "error_log",
         value => "${logs}/php_apache.log",
+        file => '/etc/php5/apache2/php.ini'
+    }
+
+    php::config { "apache_max_execution_time":
+        setting => "max_execution_time",
+        value => "300",
         file => '/etc/php5/apache2/php.ini'
     }
 
@@ -123,4 +139,51 @@ class profile::common::php (
         file => '/etc/php5/cli/php.ini'
     }
 
+    php::config { 'xdebug.remote_enable' :
+        setting => 'xdebug.remote_enable',
+        value => '1',
+        file => '/etc/php5/mods-available/xdebug.ini'
+    }
+
+    php::config { 'xdebug.remote_connect_back' :
+        setting => 'xdebug.remote_connect_back',
+        value => '1',
+        file => '/etc/php5/mods-available/xdebug.ini'
+    }
+
+    php::config { 'xdebug.remote_host' :
+        setting => 'xdebug.remote_host',
+        value => '127.0.0.1',
+        file => '/etc/php5/mods-available/xdebug.ini'
+    }
+
+    php::config { 'xdebug.remote_port' :
+        setting => 'xdebug.remote_port',
+        value => '9000',
+        file => '/etc/php5/mods-available/xdebug.ini'
+    }
+
+    php::config { 'xdebug.trace_enable_trigger' :
+        setting => 'xdebug.trace_enable_trigger',
+        value => '1',
+        file => '/etc/php5/mods-available/xdebug.ini'
+    }
+
+    php::config { 'xdebug.trace_output_dir' :
+        setting => 'xdebug.trace_output_dir',
+        value => 'home/vagrant/trace',
+        file => '/etc/php5/mods-available/xdebug.ini'
+    }
+
+    php::config { 'xdebug.profiler_enable_trigger' :
+        setting => 'xdebug.profiler_enable_trigger',
+        value => '1',
+        file => '/etc/php5/mods-available/xdebug.ini'
+    }
+
+    php::config { 'xdebug.profiler_output_dir' :
+        setting => 'xdebug.profiler_output_dir',
+        value => '/home/vagrant/profiler/',
+        file => '/etc/php5/mods-available/xdebug.ini'
+    }
 }

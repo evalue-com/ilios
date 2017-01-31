@@ -1,0 +1,63 @@
+services:
+    security.access.dto.authentication_voter:
+        class: Ilios\AuthenticationBundle\Voter\DTO\AuthenticationDTOVoter
+        public: false
+        tags:
+            - { name: security.voter }
+    security.access.dto.cohort_voter:
+        class: Ilios\AuthenticationBundle\Voter\DTO\CohortDTOVoter
+        parent: security.access.course_voter
+        public: false
+        tags:
+            - { name: security.voter }
+    security.access.dto.course_voter:
+        class: Ilios\AuthenticationBundle\Voter\DTO\CourseDTOVoter
+        parent: security.access.course_voter
+        public: false
+        tags:
+            - { name: security.voter }
+    security.access.dto.learner_group_voter:
+        class: Ilios\AuthenticationBundle\Voter\DTO\LearnerGroupDTOVoter
+        public: false
+        tags:
+            - { name: security.voter }
+    security.access.dto.mesh_descriptor_voter:
+        class: Ilios\AuthenticationBundle\Voter\DTO\MeshDescriptorDTOVoter
+        parent: security.access.entity.mesh_voter
+        public: false
+        tags:
+            - { name: security.voter }
+    security.access.dto.program_voter:
+        class: Ilios\AuthenticationBundle\Voter\DTO\ProgramDTOVoter
+        public: false
+        tags:
+            - { name: security.voter }
+    security.access.dto.program_year_voter:
+        class: Ilios\AuthenticationBundle\Voter\DTO\ProgramYearDTOVoter
+        parent: security.access.entity.program_year_voter
+        public: false
+        tags:
+            - { name: security.voter }
+    security.access.dto.school_voter:
+        class: Ilios\AuthenticationBundle\Voter\DTO\SchoolDTOVoter
+        public: false
+        tags:
+            - { name: security.voter }
+    security.access.dto.session_voter:
+        class: Ilios\AuthenticationBundle\Voter\DTO\SessionDTOVoter
+        parent: security.access.course_voter
+        public: false
+        tags:
+            - { name: security.voter }
+    security.access.dto.term_voter:
+        class: Ilios\AuthenticationBundle\Voter\DTO\TermDTOVoter
+        parent: security.access.entity.term_voter
+        public: false
+        tags:
+            - { name: security.voter }
+    security.access.dto.user_voter:
+        class: Ilios\AuthenticationBundle\Voter\DTO\UserDTOVoter
+        parent: security.access.entity.user_voter
+        public: false
+        tags:
+            - { name: security.voter }
